@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var Validate = function(){
+                      
+            var flag =1;
+
+            //The Validation For FirstName(is empty or check format)
+            var fname = document.getElementById('fname').value;
+        
+            if(fname==""){
+                document.getElementById('msgfname').innerHTML=" Please Enter Firstname";
+                document.getElementById('fname').focus();
+                flag =0
+                return false;
+            }
+            else if(!fname.match(/^[a-zA-Z]+$/)) 
+   		    {
+                document.getElementById('msgfname').innerHTML = "Only alphabets are allowed in FirstName";
+                document.getElementById('fname').focus();
+                flag=0;
+                return false;
+                
+        	}
+           
+          //The Validations for Email(is empty or check format)
+            var e = document.getElementById('email').value;
+           
+            if(e=="")
+            {
+                document.getElementById('msgemail').innerHTML = "Please Enter Email Address";
+                document.getElementById('email').focus();
+                flag=0;
+                return false;			
+            }
+            else if(!e.match(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/))
+            {
+                document.getElementById('msgemail').innerHTML = "Invalid Email Address";
+                document.getElementById('email').focus();
+                flag=0;
+                return false;			
+            }	
+        
+            //The Validations for Password Field(is Empty Or Check Format) 
+            var pwd = document.getElementById('pwd').value;
+            if(pwd=="")
+            {
+                document.getElementById('msgpwd').innerHTML = "Please Enter Password";
+                document.getElementById('pwd').focus();
+                flag=0;
+                return false;			
+            }
+            else if(!pwd.match(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/)) 
+            {
+                document.getElementById('msgpwd').innerHTML = "Password is not a Correct";
+                document.getElementById('pwd').focus();
+                flag=0;
+                return false;		
+            }
+	
+            //The Validations for Confirm Password Field(is Empty Or Check Format) 
+            var cpwd = document.getElementById('cpwd').value;
+            if(cpwd=="")
+            {
+                document.getElementById('msgcpwd').innerHTML = "Please Enter Confirm Password";
+                document.getElementById('cpwd').focus();
+                flag=0;
+                return false;
+            }
+            else if(cpwd!=pwd)
+            {
+                document.getElementById('msgcpwd').innerHTML = "Confirm password And Password Must Be Same";
+                document.getElementById('cpwd').focus();
+                flag=0;
+                return false;	
+                
+            }
+            
+            //The Validations For Contact Number(is empty or check the Foprmat)		
+            var cont = document.getElementById('contact').value;
+            if(cont=="")
+            {
+                document.getElementById('msgcontact').innerHTML = "Please Enter Contact Number";
+                document.getElementById('contact').focus();
+                flag=0;
+                return false;
+            }
+            else if(isNaN(cont))
+            {
+        
+                document.getElementById('msgcontact').innerHTML = "Enter Numeric Value For Contact Number";
+                document.getElementById('contact').focus();
+                flag=0;
+                return false;	
+            }
+            else if(cont.length!=10)
+            {
+                document.getElementById('msgcontact').innerHTML = "Enter 10 characters Contact Number";
+                document.getElementById('contact').focus();
+                flag=0;
+                return false;	
+            }
+            //The validations for image
+            var img = document.getElementById('img').value;
+            if(img=="")
+            {
+                document.getElementById('msgimg').innerHTML = "Please Select Your Profile Picture.";
+                document.getElementById('img').focus();
+                flag=0;
+                return false;
+            }
+            else if(img!="")
+            {   
+                
+                var ext=img.substring(img.lastIndexOf('.') + 1).toLowerCase();
+                var exe = ["jpeg","png","jpg","bmp"];
+                var a = exe.indexOf(ext);
+                
+                if(a<0)
+                {
+                        document.getElementById('msgimg').innerHTML = "only upload jpeg,jpg,png,bmp files";
+                        document.getElementById('img').focus();
+                        flag=0;
+                        return false;
+                }
+            
+            }
+                
+            if(flag==0)
+            {
+                return false;
+            }
+            else
+            {
+                alert("Registered Successfully")
+            }
+             
+            return false;
+        };
+
+        
+
+        //This Function Is for display An Image
+        var ImageUplode=function(input) {
+                    
+                        
+                    if(input.files && input.files[0])
+                    {
+                            var reader = new FileReader();
+
+                                reader.onload = function(e) {
+                                $('#blah').attr('src', e.target.result);
+                                }
+
+                            reader.readAsDataURL(input.files[0]);
+                    }
+        }
+
+        $("#img").change(function() {
+            readURL(this);
+        });
+        
+        
+        //This Function is for set a null value to error label
+        var nVal=function() {
+
+        document.getElementById('msgfname').innerHTML = "";
+        document.getElementById('msgemail').innerHTML = "";
+        document.getElementById('msgpwd').innerHTML = "";
+        document.getElementById('msgcpwd').innerHTML = "";
+        document.getElementById('msgcontact').innerHTML = "";
+        document.getElementById('msgimg').innerHTML = "";
+
+        };
+
+    </script>
+</head>
+<body>
+    <h1 align="center">Registration</h1>
+<form   action="#" method="post" onsubmit="return Validate();">
+<table align="center">
+    <tr>
+        <td>Enter Firstname :</td>
+        <td><input type="text" name="fname" id="fname"  onblur="nVal();" ><label id="msgfname"></label></td>
+    </tr>
+    <tr>
+        <td>Enter Email :</td>
+        <td><input type="text" name="email" id="email"><label id="msgemail"  onblur="nVal();"></label></td>
+    </tr>
+    <tr>
+        <td>Enter Password :</td>
+        <td><input type="password" name="pwd" id="pwd"><label id="msgpwd"  onblur="nVal();"></label></td>
+    </tr>
+    <tr>
+        <td>Enter Confirm Passwod :</td>
+        <td><input type="password" name="cpwd" id="cpwd"><label id="msgcpwd"  onblur="nVal();"></label></td>
+    </tr>
+    <tr>
+        <td>Enter contact Number :</td>
+        <td><input type="text" name="contact" id="contact"><label id="msgcontact"  onblur="nVal();"></label></td>
+    </tr>
+    <tr>
+        <td>Enter Gender :</td>
+        <td><input type="radio" name="gender" value="Male" checked>Male<input type="radio" name="gender" value="Female">Female</td>
+    </tr>
+    <tr>
+        <td>Profile Image :</td>
+        <td><input type="file" name="file" onChange="ImageUplode(this)"  id="img" onblur="nVal();"></label><label id="msgimg"></label></td>
+    </tr>
+    <tr>
+        <td>Your Image :</td>
+        <td><img id="blah" src="#" width="100%" height="30%" alt="your image" /></td>
+    </tr>
+
+
+    <tr>
+        <td colspan="2"><input type="submit" name="submit" value="submit"></td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
